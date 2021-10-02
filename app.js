@@ -59,7 +59,20 @@ app
         res.send(err);
       }
     });
-  })
-  .app.listen(3000, function () {
-    console.log("Server started on port 3000");
   });
+//============================ Req a specific article ==============================
+app.route("/articles/:articleTitle").get(function (req, res) {
+  Article.findOne(
+    { title: req.params.articleTitle },
+    function (err, foundArticle) {
+      if (!err) {
+        res.send(foundArticle);
+      } else {
+        res.send("No article with this title");
+      }
+    }
+  );
+});
+app.listen(3000, function () {
+  console.log("Server started on port 3000");
+});
