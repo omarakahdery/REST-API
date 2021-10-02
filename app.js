@@ -61,18 +61,38 @@ app
     });
   });
 //============================ Req a specific article ==============================
-app.route("/articles/:articleTitle").get(function (req, res) {
-  Article.findOne(
-    { title: req.params.articleTitle },
-    function (err, foundArticle) {
-      if (!err) {
-        res.send(foundArticle);
-      } else {
-        res.send("No article with this title");
+app
+  .route("/articles/:articleTitle")
+  .get(function (req, res) {
+    Article.findOne(
+      { title: req.params.articleTitle },
+      function (err, foundArticle) {
+        if (!err) {
+          res.send(foundArticle);
+        } else {
+          res.send("No article with this title");
+        }
       }
-    }
-  );
-});
+    );
+  })
+  .put(function (req, res) {
+    let article_to_update = req.params.articleTitle;
+    let new_title = req.body.title;
+    let new_content = req.body.content;
+
+    Article.findOneAndUpdate(
+      { title: article_to_update },
+      { title: new_title, content: new_content },
+      { overwrite: true },
+      function (error) {
+        if (!error) {
+          res.send("The article uccessfully Updated ");
+        } else {
+          res.send(error);
+        }
+      }
+    );
+  });
 app.listen(3000, function () {
   console.log("Server started on port 3000");
 });
