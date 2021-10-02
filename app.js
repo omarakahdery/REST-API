@@ -25,10 +25,10 @@ const articleSchema = {
   content: String,
 };
 
-//to Create the modlle
+//to Create the model
 const Article = mongoose.model("Article", articleSchema);
 
-//TODO/////////////////////////////
+//------------------------------
 app
   .route("/articles")
   .get(function (req, res) {
