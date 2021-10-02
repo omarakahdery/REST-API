@@ -92,7 +92,32 @@ app
         }
       }
     );
+  })
+  .patch(function (req, res) {
+    let article_to_update = req.params.articleTitle;
+    Article.findOneAndUpdate(
+      { title: article_to_update },
+      { $set: req.body },
+      function (error) {
+        if (!error) {
+          res.send("The article uccessfully Updated ");
+        } else {
+          res.send(error);
+        }
+      }
+    );
+  })
+  .delete(function (req, res) {
+    let article_to_update = req.params.articleTitle;
+    Article.deleteOne({ title: article_to_update }, function (error) {
+      if (!error) {
+        res.send("The article uccessfully deleted ");
+      } else {
+        res.send(error);
+      }
+    });
   });
+
 app.listen(3000, function () {
   console.log("Server started on port 3000");
 });
